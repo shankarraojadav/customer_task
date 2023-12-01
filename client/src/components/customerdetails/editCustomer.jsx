@@ -89,18 +89,6 @@ export default function EditCustomerModal({ editData }) {
 
   return (
     <div>
-      <IconButton
-        sx={{
-          borderRadius: "10vh",
-          border: "1px solid black",
-          fontSize: "2vh",
-          padding: "2vh",
-          fontWeight: "bold",
-        }}
-        onClick={handleOpen}
-      >
-        Add New
-      </IconButton>
       <Modal
         open={openEditModal}
         onClose={handleClose}
