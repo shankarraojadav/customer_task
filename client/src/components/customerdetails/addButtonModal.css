@@ -1,0 +1,14 @@
+.textBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1vh;
+}
+
+.titleBox {
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
