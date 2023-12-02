@@ -14,7 +14,7 @@ import {
   GET_ALL_CUSTOMER_SUCCESS,
 } from "./type";
 
-const url = " http://localhost:3000";
+const url = "https://customer-xnhc.onrender.com" || " http://localhost:3000";
 
 export const addCustomer = (data) => async (dispatch) => {
   try {
