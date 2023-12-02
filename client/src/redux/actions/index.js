@@ -66,11 +66,12 @@ export const getAllCustomers = () => async (dispatch) => {
   }
 };
 
-export const editCustomerData = (data) => async (dispatch) => {
+export const editCustomerData = (id,data) => async (dispatch) => {
   try {
+    console.log(id, data)
     dispatch({ type: EDIT_CUSTOMER_DATA_REQUEST });
 
-    const response = await axios.put(`${url}/editCustomer`, data);
+    const response = await axios.put(`${url}/editCustomer/${id}`, data);
 
     dispatch({ type: EDIT_CUSTOMER_DATA_SUCCESS, payload: response.data });
   } catch (error) {

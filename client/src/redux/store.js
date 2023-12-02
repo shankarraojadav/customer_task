@@ -6,7 +6,7 @@ const store = configureStore({
     addCustomers: addItemReducer,
     deleteCustumer: deleteCustomerReducer,
     allCustomers: getAllCustomersReducer,
-    editData: EDITCustomerReducer
+    editCustomer: EDITCustomerReducer
   },
 });
 

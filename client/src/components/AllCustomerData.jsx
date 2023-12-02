@@ -17,17 +17,21 @@ import { deleteCustomer, getAllCustomers } from "../redux/actions";
 import CustomerDetailsModal from "./customerdetails/CustomerDetailsModal";
 import { DataContext } from "../context/dataContext";
 import EditCustomerModal from "./customerdetails/editCustomer";
+import DeleteModal from "./deleteModal";
 
 export default function AllCustomerData() {
   const { openEditModal, setOpenEditModal } = useContext(DataContext);
 
   const [editData, setEditData] = useState();
+  const [editId, setEditId] = useState();
 
   const { customersData } = useSelector((state) => state.allCustomers || {});
 
   const { addData } = useSelector((state) => state.addCustomers || {});
 
   const { deleteData } = useSelector((state) => state.deleteCustumer || {});
+
+  const { editedData } = useSelector((state) => state.editCustomer || {});
 
   const dispatch = useDispatch();
   console.log("dd", addData);
@@ -43,18 +47,24 @@ export default function AllCustomerData() {
     } else if (deleteData?.status) {
       dispatch(getAllCustomers());
     }
-  }, [deleteData]);
+    else if (editData?.status) {
+      dispatch(getAllCustomers());
+    }
+  }, [addData,editedData,deleteData]);
 
   const handleDelete = (id) => {
     dispatch(deleteCustomer(id));
   };
 
   const handleEdit = (id) => {
-    const customerToEdit = customersData.find((customer) => customer._id === id);
+    const customerToEdit = customersData.find(
+      (customer) => customer._id === id
+    );
     if (customerToEdit) {
-        setEditData(customerToEdit)
+      setEditData(customerToEdit);
+      setEditId(id);
     }
-    setOpenEditModal(true)
+    setOpenEditModal(true);
   };
   // Table Pagination
   const [page, setPage] = useState(0);
@@ -76,7 +86,7 @@ export default function AllCustomerData() {
       </Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mr: "20vh" }}>
         <CustomerDetailsModal />
-        <EditCustomerModal editData={editData} />
+        <EditCustomerModal editData={editData} editId={editId} />
       </Box>
       <Box
         sx={{
@@ -133,9 +143,9 @@ export default function AllCustomerData() {
                         variant="outlined"
                         color="secondary"
                         sx={{ ml: "2vh" }}
-                        onClick={() => handleDelete(customer._id)}
+                        
                       >
-                        Delete
+                        <DeleteModal customerId={customer._id} />
                       </Button>
                     </TableCell>
                   </TableRow>

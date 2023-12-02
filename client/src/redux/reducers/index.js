@@ -48,7 +48,7 @@ export const EDITCustomerReducer = (state = {}, action) => {
     case EDIT_CUSTOMER_DATA_REQUEST:
       return { loading: true };
     case EDIT_CUSTOMER_DATA_SUCCESS:
-      return { loading: false, success: true, editCustomerData: action.payload };
+      return { loading: false, success: true, editedData: action.payload };
     case EDIT_CUSTOMER_DATA_FAILURE:
       return { loading: false, error: action.payload.error };
     default:

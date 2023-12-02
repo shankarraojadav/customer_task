@@ -11,6 +11,9 @@ const router = express.Router();
 router.post("/addCustomer", addCustomerDetails);
 router.get("/getAllCustomers", getAllCustomers);
 router.delete("/deletecustomer/:id", deleteCustomer);
-router.put("/edtCustomer", editCustomer)
+router.put("/editCustomer/:id", editCustomer)
+
+
+
 
 export default router;

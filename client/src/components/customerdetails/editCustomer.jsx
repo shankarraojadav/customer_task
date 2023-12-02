@@ -10,6 +10,7 @@ import "./addButtonModal.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import { editCustomerData } from "../../redux/actions/index";
+import { NotificationContext } from "../../context/NotificationProvider";
 
 const style = {
   position: "absolute",
@@ -23,7 +24,7 @@ const style = {
   p: 4,
 };
 
-export default function EditCustomerModal({ editData }) {
+export default function EditCustomerModal({ editData, editId }) {
   const {
     country,
     state,
@@ -32,6 +33,8 @@ export default function EditCustomerModal({ editData }) {
     openEditModal,
     setOpenEditModal,
   } = useContext(DataContext);
+
+  const { updateNotification } = useContext(NotificationContext);
 
   const handleOpen = () => setOpenEditModal(true);
   const handleClose = () => setOpenEditModal(false);
@@ -82,7 +85,7 @@ export default function EditCustomerModal({ editData }) {
     };
 
     console.log("New data to be dispatched:", newData);
-    dispatch(editCustomerData(newData));
+    dispatch(editCustomerData(editId,newData));
 
     handleClose();
   };

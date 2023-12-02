@@ -54,12 +54,11 @@ export const getAllCustomers = async (req, res) => {
   }
 };
 
-
 export const deleteCustomer = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedCustomer = await CustomerData.deleteOne({_id:id});
+    const deletedCustomer = await CustomerData.deleteOne({ _id: id });
 
     if (!deletedCustomer) {
       return res
@@ -78,9 +77,42 @@ export const deleteCustomer = async (req, res) => {
 
 export const editCustomer = async (req, res) => {
   try {
-    console.log(req.body)
+    const {
+      fullName,
+      email,
+      password,
+      country,
+      state,
+      city,
+      languages,
+      active,
+    } = req.body;
+
+    const { id } = req.params
+  
+
+    const updatedCustomer = await CustomerData.findByIdAndUpdate(
+      id,
+      {
+        fullName,
+        email,
+        password,
+        country,
+        state,
+        city,
+        languages,
+        active,
+      },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+
+    return res.status(200).json({status: true, updatedCustomer});
   } catch (error) {
-    
+    console.error("Error editing customer:", error);
+    return res.status(500).json({ status:false, message: "Internal server error" });
   }
 };
-

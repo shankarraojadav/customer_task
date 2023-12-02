@@ -8,8 +8,9 @@ import { DataContext } from "../../context/dataContext";
 import LanguageSelector from "../language";
 import "./addButtonModal.css";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch  } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addCustomer } from "../../redux/actions/index";
+import { NotificationContext } from "../../context/NotificationProvider";
 
 const style = {
   position: "absolute",
@@ -24,15 +25,14 @@ const style = {
 };
 
 export default function CustomerDetailsModal() {
-
   const { country, state, city, selectedLanguage } = useContext(DataContext);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  
+  const { updateNotification } = useContext(NotificationContext);
 
-  const dispatch  = useDispatch();
+  const dispatch = useDispatch();
 
   const [fullName, setFullName] = useState();
   const [email, setEmail] = useState();
@@ -45,10 +45,9 @@ export default function CustomerDetailsModal() {
   const handleCancel = () => {
     setData();
     handleClose();
-  }
+  };
 
-  console.log(data)
- 
+  console.log(data);
 
   const handleSave = () => {
     setData({
@@ -62,7 +61,12 @@ export default function CustomerDetailsModal() {
       languages: selectedLanguage?.label,
     });
 
-    dispatch(addCustomer(data))
+    if (password === confirmpassword) {
+      dispatch(addCustomer(data));
+    }
+    else {
+      updateNotification("error", "password and confirm password not matching")
+    }
   };
 
   return (
@@ -144,12 +148,31 @@ export default function CustomerDetailsModal() {
             </Box>
             <Box className="textBox">
               <Typography>Active</Typography>
-              <Checkbox onChange={()=>setActive(true)}/>
+              <Checkbox onChange={() => setActive(true)} />
             </Box>
           </Box>
-          <Box sx={{display:"flex", justifyContent:"flex-end"}}>
-            <IconButton onClick={handleCancel} sx={{border:"1px solid black", borderRadius:"10%", fontSize:"3vh", mr:"10vh"}}>Cancel</IconButton>
-            <IconButton onClick={handleSave}  sx={{border:"1px solid black", borderRadius:"10%", fontSize:"3vh"}}>Save</IconButton>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <IconButton
+              onClick={handleCancel}
+              sx={{
+                border: "1px solid black",
+                borderRadius: "10%",
+                fontSize: "3vh",
+                mr: "10vh",
+              }}
+            >
+              Cancel
+            </IconButton>
+            <IconButton
+              onClick={handleSave}
+              sx={{
+                border: "1px solid black",
+                borderRadius: "10%",
+                fontSize: "3vh",
+              }}
+            >
+              Save
+            </IconButton>
           </Box>
         </Box>
       </Modal>
